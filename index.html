@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pine Creek Radio</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #0f2540;
+      --card: #f5ebd8;
+      --accent-1: #d9612b;
+      --accent-2: #f2c44f;
+      --accent-3: #5ea9a1;
+      --text: #111;
+      --text-muted: #444;
+      --shadow: 0 20px 45px rgba(0, 0, 0, 0.18);
+      --radius: 32px;
+      font-family: 'Inter', system-ui, sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: radial-gradient(circle at top left, rgba(245, 235, 216, 0.18), transparent 30%),
+                  radial-gradient(circle at 80% 10%, rgba(250, 192, 79, 0.2), transparent 20%),
+                  linear-gradient(135deg, #102a47 0%, #0f223a 100%);
+      color: #fff;
+      line-height: 1.6;
+    }
+
+    .page-wrap {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 24px 18px 48px;
+    }
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+      padding: 36px 22px 30px;
+      background: linear-gradient(180deg, rgba(18, 40, 65, 0.98), rgba(14, 26, 44, 0.9));
+      border-radius: 38px;
+      box-shadow: var(--shadow);
+      border: 1px solid rgba(255,255,255,0.08);
+      margin-bottom: 34px;
+    }
+
+    .hero::before,
+    .hero::after {
+      content: '';
+      position: absolute;
+      border-radius: 28px;
+      opacity: 0.9;
+      z-index: 0;
+    }
+
+    .hero::before {
+      width: 170px;
+      height: 160px;
+      background: var(--accent-2);
+      top: -28px;
+      right: -24px;
+      transform: rotate(18deg);
+    }
+
+    .hero::after {
+      width: 220px;
+      height: 150px;
+      background: rgba(94, 169, 161, 0.92);
+      bottom: -28px;
+      left: -18px;
+      transform: rotate(-10deg);
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--accent-2);
+      font-size: 0.95rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      margin-bottom: 18px;
+    }
+
+    .eyebrow span {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--accent-3);
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(3.1rem, 7vw, 5.4rem);
+      letter-spacing: -0.06em;
+      line-height: 0.95;
+      color: #fff;
+      text-shadow: 0 12px 20px rgba(0,0,0,0.25);
+    }
+
+    .hero-copy {
+      margin: 22px 0 26px;
+      max-width: 640px;
+      font-size: 1.1rem;
+      color: #f7f0e7;
+    }
+
+    .hero-copy strong {
+      color: var(--accent-1);
+    }
+
+    .hero-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+    }
+
+    .button,
+    .social-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 14px 22px;
+      border-radius: 999px;
+      font-weight: 700;
+      text-decoration: none;
+      transition: transform 180ms ease, box-shadow 180ms ease;
+      box-shadow: 0 12px 24px rgba(0,0,0,0.18);
+    }
+
+    .button {
+      background: var(--accent-1);
+      color: #fff;
+    }
+
+    .button:hover,
+    .social-link:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 18px 28px rgba(0,0,0,0.24);
+    }
+
+    .social-link {
+      color: #fff;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.18);
+    }
+
+    .hero-visual {
+      margin-top: 28px;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .hero-visual > div {
+      position: relative;
+      min-height: 105px;
+      border-radius: 28px;
+      padding: 20px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.08);
+      backdrop-filter: blur(6px);
+    }
+
+    .hero-visual .guitar {
+      background: radial-gradient(circle at top right, rgba(242,196,79,0.28), transparent 45%),
+                  linear-gradient(135deg, rgba(217,97,43,0.92), rgba(93,169,161,0.82));
+    }
+
+    .hero-visual .drums {
+      background: radial-gradient(circle at 20% 20%, rgba(255,255,255,0.18), transparent 30%),
+                  linear-gradient(135deg, rgba(255,255,255,0.14), rgba(255,255,255,0.03));
+    }
+
+    .hero-visual .icon {
+      font-size: 3.2rem;
+      line-height: 1;
+      display: inline-block;
+      margin-top: 8px;
+    }
+
+    .section {
+      margin-bottom: 38px;
+    }
+
+    .section-inner {
+      display: grid;
+      gap: 20px;
+    }
+
+    .section h2 {
+      margin: 0;
+      font-size: 2.1rem;
+      color: #fff;
+    }
+
+    .panel {
+      border-radius: 32px;
+      padding: 28px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      box-shadow: 0 18px 40px rgba(0,0,0,0.12);
+      backdrop-filter: blur(8px);
+    }
+
+    .about p,
+    .contact p {
+      margin: 0;
+      color: #f0e7dc;
+      font-size: 1.03rem;
+    }
+
+    .split-grid {
+      display: grid;
+      gap: 22px;
+    }
+
+    .video-wrap {
+      position: relative;
+      overflow: hidden;
+      border-radius: 28px;
+      background: #000;
+      padding-top: 56.25%;
+      border: 1px solid rgba(255,255,255,0.12);
+      box-shadow: 0 20px 36px rgba(0,0,0,0.24);
+    }
+
+    .video-wrap iframe {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
+
+    .schedule-grid {
+      display: grid;
+      gap: 16px;
+    }
+
+    .show-card {
+      display: grid;
+      gap: 10px;
+      padding: 22px;
+      border-radius: 28px;
+      background: linear-gradient(180deg, rgba(235,205,158,0.16), rgba(16, 28, 52, 0.9));
+      border: 1px solid rgba(255,255,255,0.12);
+    }
+
+    .show-card strong {
+      display: block;
+      font-size: 1rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--accent-2);
+    }
+
+    .show-card h3 {
+      margin: 0;
+      font-size: 1.35rem;
+      color: #fff;
+    }
+
+    .show-card span {
+      color: #dcd2c7;
+      font-size: 0.97rem;
+    }
+
+    .contact-list {
+      display: grid;
+      gap: 10px;
+    }
+
+    .contact-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      padding: 18px 20px;
+      border-radius: 24px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.12);
+      color: #f7efe4;
+      font-size: 1rem;
+    }
+
+    .contact-item strong {
+      color: var(--accent-2);
+      min-width: 84px;
+    }
+
+    .footer {
+      text-align: center;
+      padding-top: 12px;
+      font-size: 0.97rem;
+      color: #b7b0a5;
+    }
+
+    .footer a {
+      color: #fff;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-bottom: 12px;
+    }
+
+    @media (min-width: 720px) {
+      .hero {
+        padding: 48px 42px 38px;
+      }
+
+      .hero-visual {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .split-grid {
+        grid-template-columns: 1.1fr 0.9fr;
+      }
+
+      .section-inner {
+        gap: 26px;
+      }
+    }
+
+    @media (max-width: 520px) {
+      .hero {
+        padding: 28px 18px 24px;
+      }
+
+      .hero-visual {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-copy,
+      .about p,
+      .contact p {
+        font-size: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="page-wrap">
+    <section class="hero">
+      <div class="hero-content">
+        <div class="eyebrow"><span></span>Live Music for Events</div>
+        <h1>Pine Creek Radio</h1>
+        <p class="hero-copy">A fun, energetic variety rock duo bringing vintage vibes to bars, parties, festivals, and private events. Bold sound, bright energy, and a stage-ready retro feel.</p>
+
+        <div class="hero-buttons">
+          <a class="button" href="mailto:hello@pinecreekradio.com">Book Us</a>
+          <a class="social-link" href="https://www.tiktok.com/@pinecreekradio" target="_blank" rel="noreferrer">TikTok</a>
+          <a class="social-link" href="https://www.youtube.com/@pinecreekradio" target="_blank" rel="noreferrer">YouTube</a>
+        </div>
+
+        <div class="hero-visual">
+          <div class="guitar">
+            <div class="icon">🎸</div>
+            <p style="margin: 12px 0 0; color:#fff; font-weight:700;">Electric guitar energy</p>
+          </div>
+          <div class="drums">
+            <div class="icon">🥁</div>
+            <p style="margin: 12px 0 0; color:#fff; font-weight:700;">Groove that moves the room</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section about">
+      <div class="section-inner">
+        <h2>About Pine Creek Radio</h2>
+        <div class="panel">
+          <p>We are a variety rock duo that keeps the energy high and the good times rolling. From packed bars to backyard parties and festival stages, Pine Creek Radio brings a playful retro edge and deliver sing-along hits plus upbeat originals.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section media">
+      <div class="section-inner">
+        <h2>Media</h2>
+        <div class="panel">
+          <div class="video-wrap">
+            <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="Pine Creek Radio video" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          </div>
+          <p style="margin-top:14px; color:#ddd;">Swipe through the sound in a vintage-inspired set. More videos and music coming soon.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section schedule">
+      <div class="section-inner">
+        <h2>Upcoming Shows</h2>
+        <div class="schedule-grid">
+          <div class="show-card">
+            <strong>May 2</strong>
+            <h3>Harvest Bar</h3>
+            <span>Royal Oak, MI</span>
+          </div>
+          <div class="show-card">
+            <strong>May 18</strong>
+            <h3>Sunset Beer Garden</h3>
+            <span>Ann Arbor, MI</span>
+          </div>
+          <div class="show-card">
+            <strong>June 5</strong>
+            <h3>Pine Creek Festival</h3>
+            <span>Lakeview, MI</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section contact">
+      <div class="section-inner">
+        <h2>Contact</h2>
+        <div class="panel">
+          <p>Text us to book and bring live variety rock to your next event.</p>
+          <div class="contact-list">
+            <div class="contact-item"><strong>Phone</strong><span>(248) 214-1624</span></div>
+            <div class="contact-item"><strong>Handle</strong><span>@pinecreekradio</span></div>
+            <div class="contact-item"><strong>Email</strong><span><a href="mailto:hello@pinecreekradio.com" style="color:#fff; text-decoration: underline;">hello@pinecreekradio.com</a></span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <div class="footer-links">
+        <a href="https://www.tiktok.com/@pinecreekradio" target="_blank" rel="noreferrer">TikTok</a>
+        <a href="https://www.youtube.com/@pinecreekradio" target="_blank" rel="noreferrer">YouTube</a>
+      </div>
+      <div>© Pine Creek Radio • Variety rock duo for events</div>
+    </footer>
+  </main>
+</body>
+</html>
