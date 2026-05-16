@@ -4,377 +4,770 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Pine Creek Radio</title>
-  <meta name="description" content="Pine Creek Radio is a variety rock duo bringing live music to bars, parties, and private events." />
+  <meta
+    name="description"
+    content="Pine Creek Radio is an energetic variety rock duo bringing live music to bars, parties, and private events."
+  />
   <style>
     :root {
-      color-scheme: dark;
-      --navy: #071f36;
-      --navy-2: #0c2b49;
-      --cream: #f4ead4;
-      --orange: #d95c2a;
-      --mustard: #d9ad3f;
-      --teal: #6aa8a0;
-      --red: #c84b31;
-      --ink: #061524;
-      --shadow: 0 24px 70px rgba(0,0,0,.38);
-      --radius: 34px;
-      font-family: "Arial Rounded MT Bold", "Trebuchet MS", "Avenir Next", "Segoe UI", sans-serif;
+      --bg: #042245;
+      --bg-deep: #02162f;
+      --cream: #f5e7cb;
+      --cream-soft: #efe2c5;
+      --orange: #d95524;
+      --orange-deep: #b4411c;
+      --mustard: #e4ae2c;
+      --teal: #70b6b8;
+      --ink: #091428;
+      --frame: rgba(245, 231, 203, 0.95);
+      --shadow: 0 18px 48px rgba(0, 0, 0, 0.35);
+      --outer-radius: 38px;
+      --inner-radius: 30px;
+      --pill: 999px;
+      --site-width: 1080px;
     }
 
-    * { box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
     body {
       margin: 0;
+      padding: 0;
+      min-height: 100%;
+    }
+
+    body {
       color: var(--cream);
       background:
-        radial-gradient(circle at 12% 8%, rgba(106,168,160,.2), transparent 24%),
-        radial-gradient(circle at 85% 10%, rgba(217,173,63,.16), transparent 26%),
-        linear-gradient(180deg, #0b2947 0%, #041625 100%);
-      line-height: 1.5;
+        radial-gradient(circle at 18% 14%, rgba(112, 182, 184, 0.12), transparent 26%),
+        radial-gradient(circle at 84% 8%, rgba(228, 174, 44, 0.12), transparent 24%),
+        radial-gradient(circle at 50% 72%, rgba(255, 255, 255, 0.03), transparent 34%),
+        linear-gradient(180deg, var(--bg) 0%, var(--bg-deep) 100%);
+      font-family: "Trebuchet MS", "Franklin Gothic Medium", "Arial Narrow", sans-serif;
+      letter-spacing: 0.01em;
+      line-height: 1.4;
     }
+
     body::before {
       content: "";
       position: fixed;
       inset: 0;
       pointer-events: none;
-      opacity: .08;
-      background-image: radial-gradient(rgba(255,255,255,.7) .7px, transparent .7px);
-      background-size: 4px 4px;
+      opacity: 0.14;
       mix-blend-mode: soft-light;
+      background-image:
+        radial-gradient(circle at 10% 10%, rgba(255,255,255,0.18), transparent 22%),
+        radial-gradient(circle at 85% 30%, rgba(255,255,255,0.14), transparent 20%),
+        radial-gradient(circle at 35% 80%, rgba(255,255,255,0.12), transparent 24%);
     }
-    a { color: inherit; }
-    img { display: block; max-width: 100%; }
+
+    img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      image-orientation: from-image;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
 
     .page {
-      width: min(1180px, calc(100% - 28px));
+      width: min(calc(100% - 26px), var(--site-width));
       margin: 0 auto;
-      padding: 24px 0 54px;
+      padding: 24px 0 48px;
+      position: relative;
+      z-index: 1;
     }
 
     .poster {
       position: relative;
-      overflow: hidden;
-      border: 5px solid rgba(244,234,212,.9);
-      border-radius: 42px;
-      background:
-        radial-gradient(circle at 77% 16%, rgba(217,173,63,.2), transparent 18%),
-        linear-gradient(180deg, rgba(8,32,55,.98), rgba(5,20,35,.99));
+      background: rgba(3, 30, 59, 0.78);
+      border: 5px solid var(--frame);
+      border-radius: var(--outer-radius);
+      padding: 16px;
       box-shadow: var(--shadow);
-      padding: clamp(18px, 3vw, 34px);
-      isolation: isolate;
+      overflow: hidden;
     }
+
     .poster::before,
     .poster::after {
       content: "";
       position: absolute;
+      border-radius: 34px;
+      opacity: 0.95;
       z-index: 0;
-      border-radius: 42px;
-      opacity: .96;
     }
-    .poster::before {
-      width: 250px; height: 160px; right: -42px; top: -34px;
-      background: var(--mustard); transform: rotate(15deg);
-    }
-    .poster::after {
-      width: 255px; height: 145px; right: 76px; top: 70px;
-      background: var(--red); transform: rotate(-7deg);
-    }
-    .blob-teal {
-      position: absolute; z-index: 0; width: 210px; height: 118px; top: 32px; left: 36%;
-      border-radius: 34px; background: rgba(106,168,160,.82); transform: rotate(8deg);
-    }
-    .star { position: absolute; z-index: 1; width: 30px; aspect-ratio: 1; color: var(--cream); }
-    .star::before,.star::after { content:""; position:absolute; inset:0; margin:auto; background:currentColor; border-radius:9px; }
-    .star::before { width:2px; height:100%; } .star::after { width:100%; height:2px; }
-    .s1 { left:28px; top:54px; width:46px; } .s2 { right:72px; top:190px; width:28px; }
-    .s3 { right:24px; bottom:130px; color:var(--orange); width:44px; }
 
-    .poster-content { position: relative; z-index: 2; }
-    .poster-top {
-      display: grid;
-      grid-template-columns: minmax(0, 1fr);
-      gap: 18px;
-      align-items: start;
+    .poster::before {
+      width: 220px;
+      height: 130px;
+      top: -44px;
+      right: 42px;
+      background: var(--orange);
+      transform: rotate(9deg);
     }
-    .brand-row { display: flex; align-items: flex-start; gap: 22px; }
-    .logo-badge {
-      width: clamp(96px, 16vw, 164px);
+
+    .poster::after {
+      width: 220px;
+      height: 130px;
+      bottom: -56px;
+      right: -42px;
+      background: var(--mustard);
+      transform: rotate(-12deg);
+    }
+
+    .spark {
+      position: absolute;
+      width: 26px;
       aspect-ratio: 1;
-      flex: 0 0 auto;
-      border: 5px solid var(--cream);
-      border-radius: 999px;
-      overflow: hidden;
-      background: rgba(244,234,212,.1);
-      box-shadow: 0 16px 35px rgba(0,0,0,.28);
+      z-index: 1;
+      color: var(--cream);
+      opacity: 0.95;
     }
-    .logo-badge img { width: 100%; height: 100%; object-fit: cover; }
-    .logo-badge.is-missing { display:none; }
-    .eyebrow {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      margin: 0 0 10px;
+
+    .spark::before,
+    .spark::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      margin: auto;
+      background: currentColor;
+      border-radius: var(--pill);
+    }
+
+    .spark::before {
+      width: 2px;
+      height: 100%;
+    }
+
+    .spark::after {
+      width: 100%;
+      height: 2px;
+    }
+
+    .spark.a {
+      top: 90px;
+      left: 318px;
+      color: var(--cream);
+      width: 38px;
+    }
+
+    .spark.b {
+      top: 170px;
+      left: 380px;
+      color: #ff6d46;
+      width: 24px;
+    }
+
+    .spark.c {
+      top: 374px;
+      right: 28px;
       color: var(--mustard);
-      font-size: clamp(.75rem, 1.5vw, 1rem);
-      font-weight: 900;
-      letter-spacing: .2em;
-      text-transform: uppercase;
+      width: 34px;
     }
-    .eyebrow::before { content:""; width:10px; height:10px; border-radius:50%; background:var(--teal); }
-    h1 {
+
+    .spark.d {
+      bottom: 412px;
+      left: 26px;
+      color: var(--teal);
+      width: 30px;
+    }
+
+    .poster-content {
+      position: relative;
+      z-index: 2;
+      display: grid;
+      gap: 22px;
+    }
+
+    .hero {
+      border: 4px solid rgba(245, 231, 203, 0.9);
+      border-radius: var(--inner-radius);
+      overflow: hidden;
+      background: linear-gradient(180deg, rgba(8, 37, 70, 0.9), rgba(3, 22, 43, 0.95));
+      box-shadow: 0 14px 34px rgba(0, 0, 0, 0.28);
+    }
+
+    .hero-top {
+      display: grid;
+      grid-template-columns: 220px 1fr 230px;
+      gap: 16px;
+      align-items: stretch;
+      padding: 16px;
+      background: linear-gradient(180deg, rgba(8, 38, 72, 0.96), rgba(5, 27, 51, 0.96));
+      border-bottom: 3px solid rgba(245, 231, 203, 0.5);
+    }
+
+    .logo-ring {
+      border: 5px solid var(--frame);
+      border-radius: 50%;
+      overflow: hidden;
+      min-height: 186px;
+      box-shadow: 0 10px 22px rgba(0, 0, 0, 0.26);
+      background: #0a2746;
+    }
+
+    .title-wrap {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .title-wrap h1 {
       margin: 0;
       color: var(--cream);
-      font-size: clamp(3rem, 9vw, 7rem);
-      line-height: .88;
-      letter-spacing: -.07em;
       text-transform: uppercase;
-      text-shadow: 0 8px 18px rgba(0,0,0,.33);
-      max-width: 790px;
+      letter-spacing: 0.02em;
+      font-family: "Impact", "Arial Black", "Franklin Gothic Heavy", sans-serif;
+      font-size: clamp(2.6rem, 6vw, 5rem);
+      line-height: 0.88;
+      text-shadow: 0 5px 12px rgba(0, 0, 0, 0.34);
     }
-    .tagline {
+
+    .title-wrap .tag {
+      margin-top: 14px;
+      display: inline-block;
+      color: var(--mustard);
+      font-family: "Arial Black", "Impact", sans-serif;
+      font-size: clamp(1.2rem, 2vw, 2rem);
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      border-top: 4px solid var(--mustard);
+      padding-top: 10px;
+      width: fit-content;
+    }
+
+    .instrument-box {
+      border: 3px solid rgba(245, 231, 203, 0.7);
+      border-radius: 22px;
+      overflow: hidden;
+      box-shadow: inset 0 0 0 2px rgba(9, 20, 40, 0.25);
+    }
+
+    .instrument-box img {
+      object-position: 78% 16%;
+      filter: saturate(1.12) contrast(1.02);
+    }
+
+    .hero-bottom {
+      display: grid;
+      grid-template-columns: 1fr 290px;
+      gap: 14px;
+      padding: 14px;
+      background: rgba(6, 29, 54, 0.92);
+    }
+
+    .frame {
+      border: 4px solid rgba(245, 231, 203, 0.92);
+      border-radius: 24px;
+      overflow: hidden;
+      box-shadow: 0 10px 26px rgba(0, 0, 0, 0.28);
+      background: rgba(0, 0, 0, 0.25);
+      min-height: 230px;
+    }
+
+    .hero-photo img {
+      object-position: center 30%;
+    }
+
+    .hero-side {
+      display: grid;
+      align-content: end;
+      gap: 12px;
+    }
+
+    .phone-pill,
+    .handle-pill {
+      border-radius: 18px;
+      padding: 14px 16px;
+      font-family: "Arial Black", "Impact", sans-serif;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+
+    .phone-pill {
+      background: var(--cream-soft);
+      color: var(--ink);
+      font-size: clamp(1.45rem, 2.6vw, 2rem);
+      text-align: center;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    .handle-pill {
+      background: linear-gradient(180deg, #ea672d, #c14b1f);
+      color: var(--cream);
+      font-size: 2rem;
+      text-align: center;
+      box-shadow: 0 10px 22px rgba(0, 0, 0, 0.25);
+      text-transform: none;
+      letter-spacing: 0.01em;
+    }
+
+    .top-actions {
       display: flex;
       flex-wrap: wrap;
-      gap: 10px 18px;
+      gap: 12px;
+      padding: 4px 0 2px;
+    }
+
+    .btn {
+      min-height: 62px;
+      border-radius: var(--pill);
+      display: inline-flex;
       align-items: center;
-      margin-top: 16px;
-      font-weight: 900;
+      justify-content: center;
+      padding: 0 30px;
+      font-family: "Arial Black", "Impact", sans-serif;
       text-transform: uppercase;
-      letter-spacing: .08em;
-    }
-    .tagline strong { color: var(--mustard); font-size: clamp(1.15rem, 2.3vw, 2rem); }
-    .tagline span { color: var(--cream); opacity: .95; }
-    .tagline i { width: 90px; height: 4px; background: var(--mustard); border-radius: 99px; }
-    .intro {
-      max-width: 720px;
-      margin: 18px 0 20px;
-      color: rgba(244,234,212,.96);
-      font-size: clamp(1rem, 1.6vw, 1.15rem);
-      font-weight: 700;
+      letter-spacing: 0.04em;
+      font-size: clamp(1rem, 1.8vw, 1.6rem);
+      transition: transform 160ms ease, box-shadow 160ms ease;
+      border: 2px solid rgba(245, 231, 203, 0.3);
     }
 
-    .hero-stage {
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.28);
+    }
+
+    .btn-book {
+      background: linear-gradient(180deg, #ea672d, #c44b1f);
+      color: var(--cream);
+      border: none;
+      padding-inline: 38px;
+    }
+
+    .btn-social {
+      background: rgba(6, 29, 54, 0.65);
+      color: var(--cream);
+      gap: 14px;
+      min-width: 290px;
+    }
+
+    .btn-social .icon {
+      width: 38px;
+      height: 38px;
+      border-radius: 11px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      font-family: "Arial Black", sans-serif;
+    }
+
+    .tiktok .icon {
+      background: #101820;
+    }
+
+    .youtube .icon {
+      background: #e03a20;
+    }
+
+    .section-panel {
+      border: 4px solid rgba(245, 231, 203, 0.9);
+      border-radius: 32px;
+      background: rgba(5, 25, 47, 0.9);
+      padding: 24px 24px 26px;
       position: relative;
-      margin-top: 8px;
-      min-height: 360px;
-      border: 4px solid var(--cream);
-      border-radius: 30px;
-      overflow: hidden;
-      background:
-        linear-gradient(90deg, rgba(5,20,35,.25), rgba(5,20,35,.6)),
-        radial-gradient(circle at 25% 40%, rgba(106,168,160,.22), transparent 28%),
-        linear-gradient(135deg, #123451, #071b30);
-      box-shadow: 0 18px 45px rgba(0,0,0,.25);
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.24);
     }
-    .hero-stage img {
-      width: 100%; height: 100%; min-height: 360px; object-fit: cover; object-position: center;
-      filter: saturate(1.06) contrast(1.02);
-    }
-    .hero-stage.is-missing::before {
-      content: "Add your main live band photo at /media/hero.jpg";
-      position: absolute; inset: 0; display: grid; place-items: center; text-align: center;
-      padding: 24px; color: rgba(244,234,212,.72); font-weight: 900; letter-spacing: .04em;
-    }
-    .hero-stage.is-missing img { display:none; }
-    .stage-card {
+
+    .section-panel::before {
+      content: "";
       position: absolute;
-      right: clamp(14px, 3vw, 34px);
-      bottom: clamp(14px, 3vw, 30px);
-      width: min(360px, calc(100% - 28px));
-      padding: 20px;
-      border: 4px solid var(--cream);
-      border-radius: 26px;
-      background: rgba(5,20,35,.88);
-      box-shadow: 0 18px 40px rgba(0,0,0,.32);
+      left: 0;
+      top: -2px;
+      width: 60px;
+      height: 60px;
+      border-radius: 0 0 22px 0;
+      background: var(--mustard);
+      transform: translate(-30px, -16px) rotate(-14deg);
+      z-index: 0;
     }
-    .label { margin:0 0 10px; color:var(--mustard); font-size:.85rem; font-weight:900; letter-spacing:.18em; text-transform:uppercase; }
-    .phone {
-      display:inline-block; padding:12px 18px; border-radius:16px; background:var(--cream); color:var(--navy);
-      font-size:clamp(1.55rem, 3vw, 2.25rem); line-height:1; font-weight:900; letter-spacing:-.05em;
-    }
-    .handle { margin:12px 0 0; display:inline-block; color:var(--orange); font-size:1.55rem; font-weight:900; letter-spacing:-.04em; }
-    .button-row { display:flex; flex-wrap:wrap; gap:14px; margin-top:20px; }
-    .btn, .social-pill {
-      display:inline-flex; align-items:center; justify-content:center; min-height:56px; padding:0 24px;
-      border-radius:999px; text-decoration:none; font-weight:900; text-transform:uppercase; letter-spacing:.04em;
-      transition: transform .18s ease, box-shadow .18s ease;
-    }
-    .btn { background:linear-gradient(180deg,#ef6d31,#cf5526); color:white; box-shadow:0 12px 24px rgba(0,0,0,.25); }
-    .social-pill { border:2px solid rgba(244,234,212,.36); background:rgba(255,255,255,.05); color:var(--cream); }
-    .btn:hover,.social-pill:hover { transform:translateY(-2px); box-shadow:0 16px 30px rgba(0,0,0,.25); }
 
-    .quick-links {
-      display:flex; flex-wrap:wrap; justify-content:center; gap:16px; margin:24px 0 6px;
+    .section-label {
+      position: relative;
+      z-index: 1;
+      display: inline-block;
+      margin: -42px 0 14px;
+      padding: 9px 24px;
+      border-radius: 16px;
+      background: var(--cream-soft);
+      color: var(--ink);
+      font-family: "Arial Black", "Impact", sans-serif;
+      font-size: clamp(1.35rem, 2.2vw, 2.2rem);
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.24);
     }
-    .quick-links .btn { min-width:220px; }
-    .quick-links .social-pill { min-width:160px; }
 
-    .section { position: relative; margin-top: 34px; }
-    .section-title {
-      display:inline-flex; align-items:center; gap:10px; margin:0 0 16px; padding:10px 20px;
-      border-radius:18px; background:var(--cream); color:var(--navy); font-size:clamp(1.2rem,2vw,1.7rem);
-      font-weight:900; text-transform:uppercase; letter-spacing:.05em; box-shadow:0 12px 24px rgba(0,0,0,.22);
+    .about-copy {
+      margin: 0;
+      font-size: clamp(1.2rem, 1.9vw, 2rem);
+      color: rgba(245, 231, 203, 0.98);
+      line-height: 1.45;
+      max-width: 980px;
     }
-    .section-title::before,.section-title::after { content:"✦"; color:var(--mustard); }
-    .panel, .text-card, .photo-card {
-      border:4px solid rgba(244,234,212,.9); border-radius:30px; background:rgba(7,31,54,.83);
-      box-shadow:0 18px 42px rgba(0,0,0,.25); overflow:hidden;
+
+    .about-copy strong {
+      color: var(--cream);
     }
-    .panel { padding:24px; }
-    .panel p, .text-card p { margin:0; color:rgba(244,234,212,.97); font-size:1.08rem; font-weight:700; }
-    .panel strong { color:var(--cream); }
-    .media-grid, .contact-grid { display:grid; gap:22px; }
-    .text-card { padding:24px; }
-    .video-box { margin-top:18px; aspect-ratio:16/9; border:4px solid var(--cream); border-radius:24px; overflow:hidden; background:#222; }
-    .video-box iframe { width:100%; height:100%; border:0; display:block; }
-    .photo-card { min-height:330px; position:relative; background:linear-gradient(135deg,#123451,#071b30); }
-    .photo-card img { width:100%; height:100%; min-height:330px; object-fit:cover; }
-    .photo-card.is-missing img { display:none; }
-    .photo-card.is-missing::before { content:attr(data-missing); position:absolute; inset:0; display:grid; place-items:center; padding:24px; text-align:center; color:rgba(244,234,212,.72); font-weight:900; }
-    .badge { position:absolute; left:16px; top:16px; padding:9px 14px; border-radius:16px; background:var(--cream); color:var(--navy); font-size:.78rem; font-weight:900; letter-spacing:.14em; text-transform:uppercase; }
 
-    .contact-list { display:grid; gap:12px; margin-top:18px; }
-    .contact-item { padding:14px 16px; border-radius:18px; background:rgba(255,255,255,.055); border:1px solid rgba(244,234,212,.2); }
-    .contact-item span { display:block; color:var(--mustard); font-size:.8rem; font-weight:900; letter-spacing:.16em; text-transform:uppercase; }
-    .contact-item a { display:block; margin-top:3px; text-decoration:none; color:var(--cream); font-size:1.08rem; font-weight:900; }
-
-    .schedule-list { list-style:none; padding:0; margin:18px 0 0; display:grid; gap:12px; }
-    .show { padding:14px 16px; border-radius:18px; background:rgba(255,255,255,.055); border:1px solid rgba(244,234,212,.2); }
-    .show .date { display:block; color:var(--mustard); font-size:.82rem; font-weight:900; letter-spacing:.16em; text-transform:uppercase; }
-    .show .venue { display:block; font-size:1.08rem; font-weight:900; }
-    .show .place { display:block; color:rgba(244,234,212,.78); }
-
-    footer { padding:34px 0 0; text-align:center; color:rgba(244,234,212,.72); font-size:.95rem; }
-    footer nav { display:flex; flex-wrap:wrap; justify-content:center; gap:18px; margin-bottom:12px; }
-    footer a { text-decoration:none; font-weight:900; }
-
-    @media (min-width: 820px) {
-      .poster-top { grid-template-columns: 1fr; }
-      .media-grid, .contact-grid { grid-template-columns: 1fr 1fr; }
+    .lower-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 22px;
+      align-items: stretch;
     }
-    @media (max-width: 720px) {
-      .page { width:min(calc(100% - 18px), 1180px); padding-top:10px; }
-      .poster { border-radius:30px; padding:16px; }
-      .brand-row { display:block; }
-      .logo-badge { margin-bottom:16px; }
-      .tagline i { display:none; }
-      .hero-stage { min-height:520px; }
-      .hero-stage img { min-height:520px; }
-      .stage-card { left:14px; right:14px; bottom:14px; width:auto; }
-      .quick-links .btn, .quick-links .social-pill { width:100%; }
+
+    .card {
+      border: 4px solid rgba(245, 231, 203, 0.9);
+      border-radius: 30px;
+      background: rgba(4, 24, 45, 0.9);
+      padding: 18px;
+      position: relative;
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.25);
+      overflow: hidden;
+    }
+
+    .card[hidden] {
+      display: none;
+    }
+
+    .card::after {
+      content: "";
+      position: absolute;
+      right: -60px;
+      bottom: -60px;
+      width: 140px;
+      height: 140px;
+      border-radius: 28px;
+      background: rgba(216, 85, 36, 0.82);
+      transform: rotate(-20deg);
+      z-index: 0;
+    }
+
+    .card > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    .card-label {
+      display: inline-block;
+      margin: -4px 0 14px;
+      padding: 8px 18px;
+      border-radius: 14px;
+      background: var(--cream-soft);
+      color: var(--ink);
+      font-family: "Arial Black", "Impact", sans-serif;
+      text-transform: uppercase;
+      font-size: clamp(1.15rem, 1.8vw, 1.8rem);
+      letter-spacing: 0.02em;
+    }
+
+    .media-copy {
+      margin: 0;
+      font-family: "Arial Black", "Impact", sans-serif;
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+      font-size: clamp(1.15rem, 1.75vw, 1.7rem);
+      line-height: 1.35;
+      max-width: 420px;
+    }
+
+    .big-phone {
+      margin-top: 18px;
+      display: inline-block;
+      padding: 12px 18px;
+      border-radius: 16px;
+      background: var(--cream-soft);
+      color: var(--ink);
+      font-family: "Arial Black", "Impact", sans-serif;
+      font-size: clamp(1.5rem, 2.6vw, 2.6rem);
+      letter-spacing: 0.01em;
+      box-shadow: 0 9px 18px rgba(0, 0, 0, 0.2);
+    }
+
+    .social-line {
+      margin-top: 16px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+      font-family: "Arial Black", "Impact", sans-serif;
+      color: rgba(245, 231, 203, 0.95);
+      font-size: clamp(0.98rem, 1.35vw, 1.4rem);
+    }
+
+    .social-chip {
+      width: 42px;
+      height: 34px;
+      border-radius: 11px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      color: #fff;
+      background: #0e1724;
+      border: 1px solid rgba(245, 231, 203, 0.3);
+    }
+
+    .social-chip.yt {
+      background: #d73e24;
+    }
+
+    .book-banner {
+      margin-top: 18px;
+      display: inline-flex;
+      border-radius: 22px;
+      padding: 14px 28px;
+      background: linear-gradient(180deg, #ec6a2f, #c54c1f);
+      font-family: "Arial Black", "Impact", sans-serif;
+      color: var(--cream);
+      text-transform: uppercase;
+      font-size: clamp(1.4rem, 2.1vw, 2.2rem);
+      letter-spacing: 0.02em;
+      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.26);
+    }
+
+    .photo-card {
+      display: grid;
+      gap: 14px;
+      grid-template-rows: auto 1fr;
+    }
+
+    .email-link {
+      display: inline-block;
+      width: fit-content;
+      padding: 10px 14px;
+      border-radius: 14px;
+      background: var(--cream-soft);
+      color: var(--ink);
+      font-family: "Arial Black", "Impact", sans-serif;
+      font-size: clamp(1rem, 1.8vw, 1.5rem);
+      letter-spacing: 0.01em;
+    }
+
+    .photo-frame {
+      min-height: 290px;
+      border: 4px solid rgba(245, 231, 203, 0.92);
+      border-radius: 24px;
+      overflow: hidden;
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.26);
+    }
+
+    .photo-frame img {
+      object-position: center 22%;
+    }
+
+    .tiny-note {
+      margin: 0;
+      color: rgba(245, 231, 203, 0.72);
+      font-size: 0.92rem;
+      letter-spacing: 0.02em;
+    }
+
+    footer {
+      margin-top: 14px;
+      padding: 2px 8px 4px;
+      text-align: center;
+      color: rgba(245, 231, 203, 0.8);
+      font-size: 0.95rem;
+    }
+
+    @media (max-width: 1040px) {
+      .hero-top {
+        grid-template-columns: 190px 1fr;
+      }
+
+      .instrument-box {
+        grid-column: 1 / -1;
+        min-height: 160px;
+      }
+
+      .hero-bottom {
+        grid-template-columns: 1fr;
+      }
+
+      .lower-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 760px) {
+      .page {
+        width: min(calc(100% - 14px), var(--site-width));
+        padding-top: 12px;
+      }
+
+      .poster {
+        border-width: 3px;
+        padding: 10px;
+        border-radius: 24px;
+      }
+
+      .spark {
+        display: none;
+      }
+
+      .hero {
+        border-width: 3px;
+        border-radius: 20px;
+      }
+
+      .hero-top {
+        grid-template-columns: 1fr;
+        padding: 12px;
+      }
+
+      .logo-ring {
+        width: min(220px, 60vw);
+        min-height: 0;
+        aspect-ratio: 1;
+      }
+
+      .title-wrap h1 {
+        font-size: clamp(2.4rem, 13vw, 4.2rem);
+      }
+
+      .title-wrap .tag {
+        font-size: clamp(1rem, 5.4vw, 1.6rem);
+      }
+
+      .hero-bottom {
+        padding: 10px;
+      }
+
+      .top-actions {
+        flex-direction: column;
+      }
+
+      .btn,
+      .btn-social {
+        width: 100%;
+        min-width: 0;
+      }
+
+      .section-panel,
+      .card {
+        border-width: 3px;
+        border-radius: 20px;
+        padding: 14px;
+      }
+
+      .section-label,
+      .card-label {
+        border-radius: 12px;
+      }
+
+      .about-copy {
+        font-size: 1.2rem;
+      }
+
+      .book-banner {
+        width: 100%;
+        justify-content: center;
+      }
+
+      .photo-frame {
+        min-height: 220px;
+      }
     }
   </style>
 </head>
 <body>
   <main class="page">
-    <section class="poster">
-      <div class="blob-teal"></div>
-      <div class="star s1"></div>
-      <div class="star s2"></div>
-      <div class="star s3"></div>
+    <div class="poster">
+      <div class="spark a"></div>
+      <div class="spark b"></div>
+      <div class="spark c"></div>
+      <div class="spark d"></div>
 
       <div class="poster-content">
-        <div class="poster-top">
-          <div class="brand-row">
-            <div class="logo-badge">
-              <img src="media/logo.png" alt="Pine Creek Radio logo" onerror="this.closest('.logo-badge').classList.add('is-missing')" />
+        <section class="hero">
+          <div class="hero-top">
+            <div class="logo-ring">
+              <img src="media/pinecreekradiologo.jpeg" alt="Pine Creek Radio logo" />
             </div>
-            <div>
-              <div class="eyebrow">Live Music for Events</div>
+
+            <div class="title-wrap">
               <h1>Pine Creek<br />Radio</h1>
-              <div class="tagline">
-                <strong>Variety Rock Duo</strong><i></i><span>Bars • Parties • Private Events</span>
-              </div>
-              <p class="intro">A fun, energetic variety rock duo bringing good vibes to bars, parties, and private events. We play for the crowd and adapt to the room — from laid-back acoustic sets to full rock-band energy when the night calls for it.</p>
+              <span class="tag">Variety Rock Duo</span>
+            </div>
+
+            <div class="instrument-box">
+              <img src="media/pcrbuscard.png" alt="Pine Creek Radio artwork" />
             </div>
           </div>
+
+          <div class="hero-bottom">
+            <div class="frame hero-photo">
+              <img src="media/PXL_20250427_015519298.jpg" alt="Pine Creek Radio performing live" />
+            </div>
+
+            <div class="hero-side">
+              <a class="phone-pill" href="sms:+12482141624">(248) 214-1624</a>
+              <a class="handle-pill" href="https://www.tiktok.com/@pinecreekradio" target="_blank" rel="noreferrer">@pinecreekradio</a>
+            </div>
+          </div>
+        </section>
+
+        <div class="top-actions">
+          <a class="btn btn-book" href="sms:+12482141624">Text To Book</a>
+          <a class="btn btn-social tiktok" href="https://www.tiktok.com/@pinecreekradio" target="_blank" rel="noreferrer">
+            <span class="icon">♪</span>
+            <span>@pinecreekradio</span>
+          </a>
+          <a class="btn btn-social youtube" href="https://www.youtube.com/@pinecreekradio" target="_blank" rel="noreferrer">
+            <span class="icon">▶</span>
+            <span>@pinecreekradio</span>
+          </a>
         </div>
 
-        <div class="hero-stage">
-          <img src="media/hero.jpg" alt="Pine Creek Radio performing live" onerror="this.closest('.hero-stage').classList.add('is-missing')" />
-          <div class="stage-card">
-            <p class="label">Text to Book</p>
-            <a class="phone" href="sms:+12482141624">(248) 214-1624</a>
-            <div class="handle">@pinecreekradio</div>
-            <div class="button-row">
-              <a class="btn" href="sms:+12482141624">Text Us</a>
-              <a class="btn" href="mailto:hello@pinecreekradio.com">Email Us</a>
+        <section class="section-panel">
+          <h2 class="section-label">About</h2>
+          <p class="about-copy">
+            <strong>Pine Creek Radio</strong> is an energetic variety rock duo bringing good vibes to bars,
+            parties, and private events. We play for the crowd and adapt to our audience.
+            Can be calm acoustic style or step up to full rock band energy.
+          </p>
+        </section>
+
+        <section class="lower-grid">
+          <article class="card" hidden>
+            <h2 class="card-label">Latest Media</h2>
+            <p class="media-copy">Check out a clip from one of our recent gigs!</p>
+
+            <a class="big-phone" href="sms:+12482141624">(248) 214-1624</a>
+
+            <div class="social-line">
+              <span class="social-chip">♪</span>
+              <span class="social-chip yt">▶</span>
+              <span>@pinecreekradio</span>
             </div>
-          </div>
-        </div>
+
+            <a class="book-banner" href="sms:+12482141624">Text To Book</a>
+          </article>
+
+          <article class="card photo-card">
+            <h2 class="card-label">Contact &amp; Booking</h2>
+            <a class="email-link" href="mailto:dannelder1@gmail.com">dannelder1@gmail.com</a>
+            <div class="photo-frame">
+              <img src="media/hero.jpg" alt="Pine Creek Radio live set" />
+            </div>
+            <p class="tiny-note">More photos can be swapped in from the `media/` folder as needed.</p>
+          </article>
+        </section>
       </div>
-    </section>
-
-    <div class="quick-links">
-      <a class="btn" href="sms:+12482141624">Text to Book</a>
-      <a class="social-pill" href="https://www.tiktok.com/@pinecreekradio" target="_blank" rel="noreferrer">TikTok</a>
-      <a class="social-pill" href="https://www.youtube.com/@pinecreekradio" target="_blank" rel="noreferrer">YouTube</a>
-      <a class="social-pill" href="mailto:hello@pinecreekradio.com">Email</a>
     </div>
 
-    <section class="section">
-      <h2 class="section-title">About</h2>
-      <div class="panel">
-        <p><strong>Pine Creek Radio</strong> is built for rooms that want real live music and a good time. We bring a flexible set that can fit a backyard party, bar crowd, private event, or late-night room that wants bigger singalong energy. The goal is simple: read the crowd, play great songs, and keep the vibe right.</p>
-      </div>
-    </section>
-
-    <section class="section">
-      <h2 class="section-title">Latest Media</h2>
-      <div class="media-grid">
-        <div class="text-card">
-          <p class="label">Watch a Clip</p>
-          <p>Drop in your latest live video, promo clip, or a favorite performance from YouTube. This section gives people a fast feel for the sound before they ever message you.</p>
-          <div class="video-box">
-            <iframe src="https://www.youtube.com/embed?listType=user_uploads&list=pinecreekradio" title="Pine Creek Radio videos" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-          </div>
-        </div>
-        <div class="photo-card" data-missing="Add a secondary band image at /media/band-duo.jpg">
-          <span class="badge">Band Photo</span>
-          <img src="media/band-duo.jpg" alt="Pine Creek Radio band portrait" onerror="this.closest('.photo-card').classList.add('is-missing')" />
-        </div>
-      </div>
-    </section>
-
-    <section class="section">
-      <h2 class="section-title">Schedule</h2>
-      <div class="panel">
-        <p>Keep this list short and current. Replace the placeholders below with confirmed dates.</p>
-        <ul class="schedule-list">
-          <li class="show"><span class="date">Add Date</span><span class="venue">Add Venue</span><span class="place">City, State</span></li>
-          <li class="show"><span class="date">Add Date</span><span class="venue">Add Venue</span><span class="place">City, State</span></li>
-          <li class="show"><span class="date">Add Date</span><span class="venue">Add Venue</span><span class="place">City, State</span></li>
-        </ul>
-      </div>
-    </section>
-
-    <section class="section">
-      <h2 class="section-title">Contact & Booking</h2>
-      <div class="contact-grid">
-        <div class="text-card">
-          <p class="label">Booking Info</p>
-          <p>Want to book Pine Creek Radio? Texting is the fastest way to reach us. Include your event date, venue or location, and the kind of atmosphere you want.</p>
-          <div class="contact-list">
-            <div class="contact-item"><span>Text</span><a href="sms:+12482141624">(248) 214-1624</a></div>
-            <div class="contact-item"><span>Email</span><a href="mailto:hello@pinecreekradio.com">hello@pinecreekradio.com</a></div>
-            <div class="contact-item"><span>TikTok</span><a href="https://www.tiktok.com/@pinecreekradio" target="_blank" rel="noreferrer">@pinecreekradio</a></div>
-            <div class="contact-item"><span>YouTube</span><a href="https://www.youtube.com/@pinecreekradio" target="_blank" rel="noreferrer">@pinecreekradio</a></div>
-          </div>
-          <div class="button-row"><a class="btn" href="sms:+12482141624">Text to Book</a></div>
-        </div>
-        <div class="photo-card" data-missing="Add another performance or promo image at /media/live-shot-2.jpg">
-          <span class="badge">Live Music</span>
-          <img src="media/live-shot-2.jpg" alt="Pine Creek Radio live at a venue" onerror="this.closest('.photo-card').classList.add('is-missing')" />
-        </div>
-      </div>
-    </section>
-
     <footer>
-      <nav>
-        <a href="https://www.tiktok.com/@pinecreekradio" target="_blank" rel="noreferrer">TikTok</a>
-        <a href="https://www.youtube.com/@pinecreekradio" target="_blank" rel="noreferrer">YouTube</a>
-        <a href="sms:+12482141624">Text to Book</a>
-      </nav>
-      <div>© Pine Creek Radio • Variety Rock Duo • Live Music for Events</div>
+      Pine Creek Radio • Variety Rock Duo • Text to book: (248) 214-1624
     </footer>
   </main>
 </body>
