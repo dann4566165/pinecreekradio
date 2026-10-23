@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pine Creek Radio | Variety Hits Duo</title>
+    <title>Pine Creek Radio | Live Music & Music Bingo</title>
+    <meta name="description" content="Live music and live band music bingo with Pine Creek Radio. Sing along, mark your card, and bring a fun night of music to your bar, party, or fundraiser.">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Roboto:wght@400;700&display=swap');
         
@@ -267,8 +268,42 @@
             color: var(--accent);
             font-size: 1.5rem;
         }
+
+        section[id] { scroll-margin-top: 110px; }
+        a:focus-visible { outline: 3px solid var(--accent); outline-offset: 5px; }
+        .bingo { background: #0b252d; }
+        .bingo-intro { max-width: 760px; margin: 0 auto 3rem; text-align: center; }
+        .bingo-kicker { color: #9ed1bf; text-transform: uppercase; letter-spacing: .18em; font-weight: 700; font-size: .85rem; }
+        .bingo h2 { margin: .65rem 0 1rem; font-size: clamp(2rem, 5vw, 3rem); }
+        .bingo-lead { font-size: clamp(1.4rem, 3vw, 1.85rem); color: #fff0cd; margin-bottom: 1rem; }
+        .bingo-layout { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, .9fr); gap: 3rem; align-items: center; }
+        .bingo-copy > p { margin-bottom: 1.5rem; }
+        .bingo-steps { display: grid; gap: 1.5rem; margin: 2rem 0; padding-left: 1.5rem; }
+        .bingo-steps li { padding-left: .5rem; }
+        .bingo-steps li::marker { color: var(--accent); font-size: 1.4rem; }
+        .bingo-steps h3 { color: #fff0cd; font-size: 1.15rem; }
+        .bingo-steps p { color: #d4dfdf; }
+        .bingo-card-link { display: block; border-radius: 12px; overflow: hidden; box-shadow: 0 16px 40px #0006; }
+        /* Show the complete middle card from the supplied phone screenshot. */
+        .bingo-card-crop { display: block; position: relative; aspect-ratio: 675 / 874; overflow: hidden; background: #0a1428; }
+        .bingo-card-crop img { position: absolute; width: 105.1852%; height: auto; max-width: none; left: -2.5185%; top: -51.4874%; }
+        .bingo figcaption { color: #bdcece; font-size: .85rem; margin-top: .8rem; }
+        .bingo-booking { border-top: 1px solid #ffffff29; padding-top: 1.5rem; }
+        .bingo-booking .cta-button { margin-left: 0; color: #0a1428; background: var(--accent); }
+        .bingo-photo { width: calc(50% - 2rem); margin: 3.5rem auto 0 0; }
+        .bingo-photo img { display: block; width: 100%; height: auto; border-radius: 12px; box-shadow: 0 20px 40px rgba(0,0,0,0.6); }
+        @media (prefers-reduced-motion: reduce) {
+            .cta-button, .social-link, .service-card { transition: none; }
+        }
         
         @media (max-width: 768px) {
+            .nav-container { padding: 0 1rem; }
+            .nav-links { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: .5rem 1rem; }
+            .nav-links a { margin-left: 0; font-size: .9rem; }
+            .bingo-layout { grid-template-columns: minmax(0, 1fr); gap: 2rem; }
+            .bingo-card { width: min(100%, 420px); margin: 0 auto; }
+            .bingo-photo { width: 100%; }
+            .bingo-booking .cta-button { font-size: 1rem; padding: 1rem 1.5rem; }
             .hero {
                 margin-top: 20px;
             }
@@ -297,6 +332,7 @@
             </div>
             <div class="nav-links">
                 <a href="#about">About</a>
+                <a href="#music-bingo">Music Bingo</a>
                 <a href="#contact">Contact</a>
             </div>
         </div>
@@ -313,6 +349,7 @@
             
             <div style="margin: 2rem 0;">
                 <a href="#contact" class="cta-button">Contact/Bookings</a>
+                <a href="#music-bingo" class="social-link">Explore Music Bingo</a>
             </div>
             
             <div class="social-links">
@@ -338,10 +375,9 @@
             <img src="media/garagband2.png" alt="Pine Creek Radio Live" class="band-photo" style="max-height: 500px; object-fit: cover;">
         </div>
         <div>
-            <h2 style="text-align: left;">High-Energy Live Music</h2>
+            <h2 style="text-align: left;">Fun Cansual Live Music</h2>
             <p style="font-size: 1.2rem; margin-bottom: 1.5rem;">Pine Creek Radio is a dynamic variety hits duo bringing the energy and nostalgia of classic rock, modern pop, alternative, country, and everything in between to your event.</p>
-            <p>We can do chill acoustic sets or full-band party vibes... we tailor our performance to make your night unforgettable.</p>
-            <p>High-energy duo sets featuring guitar, vocals, and edrums. With electric drums we can tailor the sound for any venue size and diverse crowds. We can go from chill acoustic sets to full on party rock anthems, we know how to read the room! We encourage requests and love to get the crowd involved. We've been known to mix things up, and get guest singers from the audience. Ask us about our Live Band Music Bingo, its a great time for everyone and can great for fundraisers or just a fun event.</p>
+            <p>Our duo features guitar, vocals, and electronic drums, with a sound tailored to your venue. We encourage requests, love getting the crowd involved, and have even welcomed guest singers from the audience. For another way to join the fun, check out our <a href="#music-bingo" style="color: var(--accent);">Live Band Music Bingo</a>.</p>
 
             <div style="margin-top: 3rem;">
                 <div style="display: flex; gap: 1rem; margin-bottom: 1rem;">
@@ -362,6 +398,41 @@
                 </div>
             </div>
         </div>
+    </section>
+
+    <!-- Live Band Music Bingo -->
+    <section id="music-bingo" class="bingo" aria-labelledby="bingo-title">
+        <div class="bingo-intro">
+            <p class="bingo-kicker">Listen & Play Along with us!</p>
+            <h2 id="bingo-title">Live Band Music Bingo</h2>
+        </div>
+        <div class="bingo-layout">
+            <div class="bingo-copy">
+                <h3>A concert you can play along with.</h3>
+                <p>Turn a night of live music into a game everyone can join. We play the songs live, you find them on your card, and the whole room gets in on the fun.</p>
+                <p>Rock, pop, alternative, country, and familiar sing-alongs meet a card full of song titles. Bring your friends, listen for your favorites, and enjoy the music while you play.</p>
+                <ul class="bingo-steps">
+                    <li><h3>Grab a card</h3><p>Your bingo card has song titles in place of numbers.</p></li>
+                    <li><h3>Listen for your songs</h3><p>When we play a song on your card, mark its square.</p></li>
+                    <li><h3>Call out bingo!</h3><p>When you complete a row you win the round!</p></li>
+                </ul>
+                <div class="bingo-booking">
+                    <h3>Bring music bingo to your crowd.</h3>
+                    <p>A fun fit for bars, private parties, community events, and fundraisers. Tell us your date, location, and what you have in mind. We can adapt for different prize / entry situations based on your event. </p>
+                    <a class="cta-button" href="mailto:dannelder1@gmail.com?subject=Live%20Band%20Music%20Bingo%20Booking">Book Music Bingo</a>
+                </div>
+            </div>
+            <figure class="bingo-card">
+                <a class="bingo-card-link" href="media/music-bingo-card-screenshot.jpeg" target="_blank" rel="noopener noreferrer" aria-label="View the sample Pine Creek Radio music bingo card image (opens in a new tab)">
+                    <span class="bingo-card-crop"><img src="media/music-bingo-card-screenshot.jpeg" alt="Pine Creek Radio sample music bingo card with a five-by-five grid of song titles and a free space in the center." width="710" height="1536" loading="lazy"></span>
+                </a>
+                <figcaption>A sample of our music bingo cards. Setlists/Themes can be custom for your event!</figcaption>
+            </figure>
+        </div>
+        <figure class="bingo-photo">
+            <img src="media/bingocelebration.png" alt="Friends celebrating a music bingo win while Pine Creek Radio performs live in a bar." width="1536" height="1024" loading="lazy">
+            <figcaption>Picture your next music bingo night.</figcaption>
+        </figure>
     </section>
 
     <!-- Contact Form -->
@@ -408,7 +479,7 @@
                 const target = document.querySelector(this.getAttribute('href'));
                 if (target) {
                     target.scrollIntoView({
-                        behavior: 'smooth'
+                        behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth'
                     });
                 }
             });
