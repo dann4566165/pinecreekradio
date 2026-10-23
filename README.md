@@ -4,7 +4,7 @@ PineCreekRadio.com
 ## Music bingo imagery
 
 - `media/music-bingo-card-screenshot.jpeg` is the owner-supplied card screenshot. CSS frames its complete middle card without changing the original file.
-- `media/music-bingo-friends.webp` is an AI-generated promotional illustration, created with the built-in image-generation tool and converted to WebP for loading speed. The page identifies it as illustrative, not an actual event photo. Replace it with an event photo and update the caption and alt text when real photography is available.
+- `media/bingocelebration.png` is the promotional image used in the music bingo section.
 
 Image-generation prompt:
 
