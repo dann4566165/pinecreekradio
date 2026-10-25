@@ -43,6 +43,7 @@ jobs:
       - name: Deploy site files
         run: |
           rsync -avz --delete \
+            --exclude='/songs/' \
             --exclude='.git/' \
             --exclude='.github/' \
             --exclude='.DS_Store' \
