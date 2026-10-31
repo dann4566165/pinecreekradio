@@ -28,8 +28,9 @@
         }
         
         .hero {
-            margin-top: 120px;
-            height: 100vh;
+            /* Let tall content expand instead of centering above the section. */
+            min-height: 100vh;
+            min-height: 100svh;
             background: linear-gradient(rgba(10, 20, 40, 0.85), rgba(10, 20, 40, 0.85)), 
                         url('https://i.imgur.com/placeholder.jpg') center/cover no-repeat;
             display: flex;
@@ -144,7 +145,8 @@
         }
         
         nav {
-            position: fixed;
+            /* Reserve the header's actual height, including wrapped mobile links. */
+            position: sticky;
             top: 0;
             width: 100%;
             background: rgba(10, 20, 40, 0.95);
@@ -304,10 +306,6 @@
             .bingo-card { width: min(100%, 420px); margin: 0 auto; }
             .bingo-photo { width: 100%; }
             .bingo-booking .cta-button { font-size: 1rem; padding: 1rem 1.5rem; }
-            .hero {
-                margin-top: 90px;
-                height: calc(100svh - 90px);
-            }
             .logo--nav .logo-image {
                 width: 58px;
             }
