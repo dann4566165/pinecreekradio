@@ -285,7 +285,45 @@
         .booking-form .form-status { text-align: center; font-weight: 700; }
         .booking-form .form-status:empty { display: none; }
         .booking-form .form-status[data-state="error"] { color: #ffb4a5; }
-        .booking-form .form-status[data-state="success"] { color: #a9edc9; }
+        .booking-form[hidden], .booking-confirmation[hidden], .contact-intro[hidden] {
+            display: none;
+        }
+        .booking-confirmation {
+            max-width: 680px;
+            margin: 0 auto;
+            padding: clamp(2rem, 6vw, 3.5rem) 1.5rem;
+            background: #1e2f4d;
+            border: 1px solid #a9edc966;
+            border-radius: 16px;
+            text-align: center;
+        }
+        .booking-confirmation:focus-visible {
+            outline: 3px solid var(--accent);
+            outline-offset: 4px;
+        }
+        .booking-confirmation .confirmation-icon {
+            display: grid;
+            place-items: center;
+            width: 72px;
+            height: 72px;
+            margin: 0 auto 1.25rem;
+            border-radius: 50%;
+            background: #a9edc922;
+            color: #a9edc9;
+            font-size: 2.5rem;
+        }
+        .booking-confirmation h3 {
+            font-family: 'Playfair Display', serif;
+            color: var(--accent);
+            font-size: clamp(1.75rem, 5vw, 2.5rem);
+            margin-bottom: .75rem;
+        }
+        .booking-confirmation p {
+            font-size: 1.15rem;
+            color: #ddd;
+            max-width: 460px;
+            margin: 0 auto;
+        }
         .booking-form .booking-website {
             position: absolute;
             left: -10000px;
@@ -475,7 +513,7 @@
     <!-- Contact Form -->
     <section id="contact" class="contact">
         <h2>Get In Touch</h2>
-        <p class="contact-intro">Let's bring some live music to your next event! Tell us a little about what you're planning and we'll get back to you about availability and details.</p>
+        <p class="contact-intro" id="contactIntro">Let's bring some live music to your next event! Tell us a little about what you're planning and we'll get back to you about availability and details.</p>
         <form class="booking-form" id="contactForm" action="contact.php" method="post">
             <div class="field-row">
                 <div>
@@ -526,6 +564,11 @@
             <p class="form-note">We'll use the contact details you provide to respond to your inquiry.</p>
             <noscript><p>Submitting without JavaScript will take you to a separate confirmation or error page.</p></noscript>
         </form>
+        <div class="booking-confirmation" id="bookingConfirmation" hidden tabindex="-1" aria-labelledby="bookingConfirmationTitle" aria-describedby="bookingConfirmationMessage">
+            <span class="confirmation-icon" aria-hidden="true">✓</span>
+            <h3 id="bookingConfirmationTitle">Thanks for reaching out!</h3>
+            <p id="bookingConfirmationMessage">Your booking inquiry has been sent successfully. We'll be in touch soon to discuss your event!</p>
+        </div>
     </section>
 
     <!-- Footer -->
@@ -543,15 +586,19 @@
         // Send booking inquiries to the server, not to the visitor's email app.
         const contactForm = document.getElementById('contactForm');
         const contactStatus = document.getElementById('contactStatus');
+        const contactIntro = document.getElementById('contactIntro');
+        const bookingConfirmation = document.getElementById('bookingConfirmation');
         const submitButton = contactForm.querySelector('button[type="submit"]');
 
         document.getElementById('bookMusicBingo').addEventListener('click', () => {
-            document.getElementById('bookingType').value = 'Live Band Music Bingo';
+            if (!contactForm.hidden) {
+                document.getElementById('bookingType').value = 'Live Band Music Bingo';
+            }
         });
 
         contactForm.addEventListener('submit', async function(e) {
             e.preventDefault();
-            if (submitButton.disabled) return;
+            if (submitButton.disabled || contactForm.hidden) return;
 
             submitButton.disabled = true;
             submitButton.textContent = 'Sending…';
@@ -571,14 +618,19 @@
                     return;
                 }
                 contactForm.reset();
-                contactStatus.dataset.state = 'success';
-                contactStatus.textContent = "Thanks for reaching out! Your inquiry was sent. We'll be in touch soon.";
+                contactForm.hidden = true;
+                contactIntro.hidden = true;
+                bookingConfirmation.hidden = false;
+                bookingConfirmation.focus({ preventScroll: true });
+                bookingConfirmation.scrollIntoView({ block: 'center' });
             } catch (error) {
                 contactStatus.dataset.state = 'error';
                 contactStatus.textContent = 'We could not confirm that your inquiry was sent. Please try again in a moment.';
             } finally {
-                submitButton.disabled = false;
-                submitButton.textContent = 'Send Booking Inquiry';
+                if (!contactForm.hidden) {
+                    submitButton.disabled = false;
+                    submitButton.textContent = 'Send Booking Inquiry';
+                }
             }
         });
 
