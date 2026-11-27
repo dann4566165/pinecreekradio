@@ -4,14 +4,28 @@ on:
   push:
     branches:
       - main
+  pull_request:
+    branches:
+      - main
   workflow_dispatch:
 
 concurrency:
-  group: production-deploy
+  group: ${{ github.event_name == 'pull_request' && format('booking-check-{0}', github.event.pull_request.number) || 'production-deploy' }}
   cancel-in-progress: true
 
 jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate booking endpoint
+        run: |
+          php -l contact.php
+          php tests/contact.test.php
+
   deploy:
+    needs: check
+    if: github.event_name != 'pull_request'
     runs-on: ubuntu-latest
     env:
       DEPLOY_HOST: 45.79.181.88
@@ -40,9 +54,19 @@ jobs:
             "$DEPLOY_USER@$DEPLOY_HOST" \
             "mkdir -p '$DEPLOY_PATH'"
 
+      - name: Check booking endpoint before replacing public contact information
+        run: |
+          rsync -avz \
+            -e "ssh -p $DEPLOY_PORT -i ~/.ssh/deploy_key" \
+            contact.php "$DEPLOY_USER@$DEPLOY_HOST:$DEPLOY_PATH"
+          curl --fail --silent --show-error --max-time 20 \
+            "https://pinecreekradio.com/contact.php?deploy=$GITHUB_SHA" \
+            | php -r '$data = json_decode(stream_get_contents(STDIN), true); exit(($data["ok"] ?? false) === true ? 0 : 1);'
+
       - name: Deploy site files
         run: |
           rsync -avz --delete \
+            --exclude='/tests/' \
             --exclude='/songs/' \
             --exclude='.git/' \
             --exclude='.github/' \
