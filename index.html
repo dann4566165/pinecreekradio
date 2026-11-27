@@ -227,43 +227,81 @@
             background: #13223f;
         }
         
-        form {
+        .contact h2 { margin-bottom: 1rem; }
+        .contact-intro {
             max-width: 600px;
+            margin: 0 auto 2rem;
+            text-align: center;
+            color: #ddd;
+        }
+
+        .booking-form {
+            max-width: 680px;
             margin: 0 auto;
             display: grid;
-            gap: 1.5rem;
+            gap: 1.25rem;
         }
-        
-        input, textarea {
-            padding: 1rem;
-            border: none;
+        .booking-form .field-row {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 1rem;
+        }
+        .booking-form label {
+            display: block;
+            font-weight: 700;
+            margin-bottom: .35rem;
+        }
+        .booking-form label span { color: #c2cbd9; font-weight: 400; font-size: .85rem; }
+        .booking-form input, .booking-form textarea, .booking-form select {
+            width: 100%;
+            min-width: 0;
+            padding: .85rem 1rem;
+            border: 1px solid #ffffff29;
             border-radius: 8px;
             background: #1e2f4d;
             color: white;
-            font-size: 1rem;
+            font: inherit;
+            color-scheme: dark;
         }
-        
-        button {
+        .booking-form textarea { resize: vertical; }
+        .booking-form input::placeholder, .booking-form textarea::placeholder { color: #b6c1d1; }
+        .booking-form :is(input, textarea, select, button):focus-visible {
+            outline: 3px solid var(--accent);
+            outline-offset: 3px;
+        }
+        .booking-form button {
             background: var(--orange);
-            color: white;
+            color: #0a1428;
             padding: 1rem;
+            font: inherit;
             font-size: 1.1rem;
             font-weight: bold;
             border: none;
             border-radius: 50px;
             cursor: pointer;
         }
-        
+        .booking-form button:disabled { opacity: .65; cursor: wait; }
+        .booking-form .form-note { font-size: .85rem; color: #c2cbd9; text-align: center; }
+        .booking-form .form-status { text-align: center; font-weight: 700; }
+        .booking-form .form-status:empty { display: none; }
+        .booking-form .form-status[data-state="error"] { color: #ffb4a5; }
+        .booking-form .form-status[data-state="success"] { color: #a9edc9; }
+        .booking-form .booking-website {
+            position: absolute;
+            left: -10000px;
+            width: 1px;
+            height: 1px;
+            overflow: hidden;
+        }
+        @media (max-width: 600px) {
+            .booking-form .field-row { grid-template-columns: minmax(0, 1fr); }
+        }
+
         .footer {
             background: #0a1428;
             text-align: center;
             padding: 3rem 0;
             border-top: 4px solid var(--orange);
-        }
-        
-        .contact-info {
-            font-size: 1.3rem;
-            margin: 1.5rem 0;
         }
         
         .retro-star {
@@ -418,7 +456,7 @@
                 <div class="bingo-booking">
                     <h3>Bring music bingo to your crowd.</h3>
                     <p>A fun fit for bars, private parties, community events, and fundraisers. Tell us your date, location, and what you have in mind. We can adapt for different prize / entry situations based on your event. </p>
-                    <a class="cta-button" href="mailto:dannelder1@gmail.com?subject=Live%20Band%20Music%20Bingo%20Booking">Book Music Bingo</a>
+                    <a class="cta-button" href="#contact" id="bookMusicBingo">Book Music Bingo</a>
                 </div>
             </div>
             <figure class="bingo-card">
@@ -437,19 +475,57 @@
     <!-- Contact Form -->
     <section id="contact" class="contact">
         <h2>Get In Touch</h2>
-        <form style="display:none;" id="contactForm">
-            <input type="text" placeholder="Your Name" required>
-            <input type="email" placeholder="Email Address" required>
-            <input type="tel" placeholder="Phone Number">
-            <textarea rows="6" placeholder="Tell us about your event (date, location, type, etc.)" required></textarea>
-            <button type="submit">SEND MESSAGE</button>
+        <p class="contact-intro">Let's bring some live music to your next event! Tell us a little about what you're planning and we'll get back to you about availability and details.</p>
+        <form class="booking-form" id="contactForm" action="contact.php" method="post">
+            <div class="field-row">
+                <div>
+                    <label for="bookingName">Your name <span>(required)</span></label>
+                    <input id="bookingName" name="name" autocomplete="name" maxlength="100" required>
+                </div>
+                <div>
+                    <label for="bookingEmail">Email address <span>(required)</span></label>
+                    <input id="bookingEmail" name="email" type="email" autocomplete="email" maxlength="254" required>
+                </div>
+            </div>
+            <div class="field-row">
+                <div>
+                    <label for="bookingPhone">Phone number <span>(optional)</span></label>
+                    <input id="bookingPhone" name="phone" type="tel" autocomplete="tel" maxlength="40">
+                </div>
+                <div>
+                    <label for="bookingType">I'm interested in <span>(required)</span></label>
+                    <select id="bookingType" name="eventType" required>
+                        <option value="">Choose an option</option>
+                        <option>Live Music</option>
+                        <option>Live Band Music Bingo</option>
+                        <option>Live Band Karaoke</option>
+                        <option>Something Else / Not Sure Yet</option>
+                    </select>
+                </div>
+            </div>
+            <div class="field-row">
+                <div>
+                    <label for="bookingDate">Event date <span>(optional)</span></label>
+                    <input id="bookingDate" name="eventDate" type="date">
+                </div>
+                <div>
+                    <label for="bookingVenue">Venue / location <span>(optional)</span></label>
+                    <input id="bookingVenue" name="venue" placeholder="Venue or city" maxlength="200">
+                </div>
+            </div>
+            <div>
+                <label for="bookingMessage">Tell us about your event <span>(required)</span></label>
+                <textarea id="bookingMessage" name="message" rows="5" maxlength="3000" placeholder="What kind of event are you planning? Include any details or questions you have." required></textarea>
+            </div>
+            <div class="booking-website" aria-hidden="true">
+                <label for="bookingWebsite">Leave this field blank</label>
+                <input id="bookingWebsite" name="website" tabindex="-1" autocomplete="off">
+            </div>
+            <button type="submit">Send Booking Inquiry</button>
+            <p class="form-status" id="contactStatus" role="status" aria-live="polite" aria-atomic="true"></p>
+            <p class="form-note">We'll use the contact details you provide to respond to your inquiry.</p>
+            <noscript><p>Submitting without JavaScript will take you to a separate confirmation or error page.</p></noscript>
         </form>
-        
-        <div class="contact-info" style="text-align: center; margin-top: 4rem;">
-            <p>Fancy form coming soon here... In the meantime TXT or email to reach us!</p>
-            <p><strong>TXT MSG:</strong> (248) 214-1624</p>
-            <p><strong>Email: dannelder1@gmail.com</strong> </p>
-        </div>
     </section>
 
     <!-- Footer -->
@@ -464,13 +540,48 @@
     </footer>
 
     <script>
-        // Simple form submission handler
-        document.getElementById('contactForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            alert("Thank you! Your message has been received. We'll get back to you soon!");
-            this.reset();
+        // Send booking inquiries to the server, not to the visitor's email app.
+        const contactForm = document.getElementById('contactForm');
+        const contactStatus = document.getElementById('contactStatus');
+        const submitButton = contactForm.querySelector('button[type="submit"]');
+
+        document.getElementById('bookMusicBingo').addEventListener('click', () => {
+            document.getElementById('bookingType').value = 'Live Band Music Bingo';
         });
-        
+
+        contactForm.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            if (submitButton.disabled) return;
+
+            submitButton.disabled = true;
+            submitButton.textContent = 'Sending…';
+            contactStatus.dataset.state = '';
+            contactStatus.textContent = 'Sending your inquiry…';
+
+            try {
+                const response = await fetch(contactForm.action, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+                    body: JSON.stringify(Object.fromEntries(new FormData(contactForm)))
+                });
+                const result = await response.json();
+                if (!response.ok || result.ok !== true) {
+                    contactStatus.dataset.state = 'error';
+                    contactStatus.textContent = result.message || 'Unable to send your inquiry. Please try again.';
+                    return;
+                }
+                contactForm.reset();
+                contactStatus.dataset.state = 'success';
+                contactStatus.textContent = "Thanks for reaching out! Your inquiry was sent. We'll be in touch soon.";
+            } catch (error) {
+                contactStatus.dataset.state = 'error';
+                contactStatus.textContent = 'We could not confirm that your inquiry was sent. Please try again in a moment.';
+            } finally {
+                submitButton.disabled = false;
+                submitButton.textContent = 'Send Booking Inquiry';
+            }
+        });
+
         // Smooth scrolling for nav links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function(e) {
